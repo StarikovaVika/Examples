@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="single-item" id="single-item">
+        <div class="single-item__column">
+                <div class="single-item__title">
+                    <div>
+                        <a class="item-link" data-id="{{ Item.id }}">{{ Item.title }}</a>
+                    </div>
+                </div>
+
+                <div class="single-item__description">
+                    {{ Item.description }}
+                </div>
+
+                <div class="single-item__date">
+                    <span>Дата:</span>
+                    {{ Item.date('d/m/Y') }}
+                </div>
+                <div class="single-item__author">
+                    <span>Автор статьи:</span>
+                    {{ Item.user.username }}
+                </div>
+        </div>
+    </div>
+    <div class="list-comments">
+        {% if app.session.get('username') %}
+        <div class="list-comments__button-comment">
+            <button  id="list-comments__button-comment" >Комментировать</button>
+        </div>
+
+            <div class="list-comments__input" id="list-comments__input">
+                <form id="list-comments__form" action="/setcomment/" method="post" data-id="{{ Item.id }}">
+                    <textarea class="list-comments__textarea" id="list-comments__textarea" name="listcommentstextarea" placeholder="Введите ваш комментарий..."></textarea>
+                    <div class="list-comments__button-submit">
+                        <button type="submit" id="list-comments__button-submit" >Отправить</button>
+                    </div>
+                </form>
+            </div>
+        {% else %}
+        {% endif %}
+        <div id="list-comment__insert" class="list-comments__strings">
+        {% for Comment in Comments %}
+            {% include 'default/newcomment.html.twig' %}
+         {% endfor %}
+        </div>
+
+        <div class="insert-comments" id="insert-comment">
+         </div>
+    </div>
+
+{% endblock %}
+
+

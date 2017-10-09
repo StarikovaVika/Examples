@@ -1,0 +1,690 @@
+{% extends "Base.twig" %}
+
+{% block rows %}
+	
+	<div id="new_object_modal" class="modal fade"> 
+		<div class="modal-dialog"> 
+			<div class="modal-content"> 
+				<div class="modal-header"> 
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+					<h4 class="modal-title">Добавление нового оборудования</h4> 
+				</div> 
+				<div class="modal-body" id = "new_object_modal_body"> 
+				<form id ="new_object_modal_form" enctype="multipart/form-data">
+					<div class="form-group" id="object_name_fg">
+						<label class="control-label">Название оборудования</label>
+						<input type="text" class="form-control" id="object_name_input" required name="object_name" placeholder="Укажите название оборудования">
+					</div>	
+       
+					<div class="form-group spec" id ="object_type_fg">
+						<label class="control-label">Выберите тип оборудования</label>
+						<select id ="object_type_select" required name="object_type" class="form-control"> 
+							{% for type in types %}
+								<option value="{{ type.pk_type }}">{{ type.type_name }}</option>
+							{% endfor %} 
+						</select> 
+					</div>
+					
+					<div class="form-group" id="object_date_fg"> 
+						<label class="control-label">Дата приобритения</label>
+						<input type="date" class="form-control" id="object_date_input" required name="object_date" placeholder="Укажите дату приобретения">
+					</div>						
+							
+					<div class="form-group" id="object_factory_number_fg">
+						<label class="control-label">Заводской номер</label>
+						<input type="number" class="form-control" id="object_factory_number_input" required name="object_factory_number" placeholder="Укажите заводской номер">
+					</div>
+					
+					<div class="form-group" id="object_inventory_number_fg">
+						<label class="control-label">Инвентарный номер</label>
+						<input type="number" class="form-control" id="object_inventory_number_input" required name="object_inventory_number" placeholder="Укажите инвентарный номер">
+					</div>
+       					
+					<div class="form-group" id="object_pasport_fg">
+						<label class="control-label">Выберите файл фотографии паспорта оборудования</label>
+						<input id ="object_pasport_input" required name="object_pasport" type="file" accept="image/*" placeholder="Выберите файл паспорта" >
+					</div>	
+					
+				</form>
+				</div> 
+				
+				<div class="modal-footer"> 
+					<div class="btn-group" role="group" aria-label="...">
+						<button type="button" class="btn btn-success" id = "new_object_add">Добавить</button> 
+						<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button> 
+					</div>	
+				</div> 
+			</div> 
+		</div> 
+	</div>
+				
+	<div id="new_place_modal" class="modal fade"> 
+		<div class="modal-dialog"> 
+			<div class="modal-content"> 
+				<div class="modal-header"> 
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+					<h4 class="modal-title">Укажите новое местоположение оборудования</h4> 
+				</div> 
+				<div class="modal-body" id = "new_place_modal_body"> 
+					<form id ="new_place_modal_form" >
+					
+						<div class="form-group" id="new_place_vsp_fg">
+							<label class="control-label">ВСП</label>						
+							<select id ="new_place_vsp_select" required name="new_place_vsp" class="form-control">  
+							</select> 
+																		
+						</div>
+						
+						<div class="form-group" id="new_place_room_fg"> 
+							<label class="control-label">Кабинет</label>
+							<input type="text" class="form-control" id="new_place_room_input" required name="new_place_room" placeholder="Укажите номер кабинета">
+						</div>
+							
+						
+						
+						<div class="form-group" id ="object_resp_fio_fg"> 						
+							<label class="control-label">Эксплуатирующее лицо</label>						
+							<select id ="object_resp_fio_input" required name="new_place_fio_input" class="form-control"> 
+							</select> 
+						</div>
+						
+						<div class="form-group" id="new_place_date_fg"> 
+							<label class="control-label">Дата перемещения</label>
+							<input type="date" class="form-control" id="new_place_date_input" required name="new_place_date" placeholder="Укажите дату перемещения">
+						</div>	
+					</form>																	
+				</div> 
+				
+				<div class="modal-footer"> 
+					<div class="btn-group" role="group" aria-label="...">
+						<button type="button" class="btn btn-success" id = "new_place_add">Сохранить</button> 
+						<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button> 						
+					</div>	
+				</div> 
+			</div> 
+		</div> 
+	</div>
+	
+	<div id="new_repair_modal" class="modal fade"> 
+		<div class="modal-dialog"> 
+			<div class="modal-content"> 
+				<div class="modal-header"> 
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+					<h4 class="modal-title">Укажите сведения о ремонте оборудования </h4> 
+				</div> 
+				<div class="modal-body" id = "new_repair_modal_body"> 
+					<form id = "new_repair_modal_form">	
+						<div class="form-group"  id="date_repair_fg"> 
+							<label class="control-label">Дата ремонта</label>
+							<input type="date" class="form-control" id="date_repair_input" required name="date_repair" placeholder="Укажите дату ремонта">
+						</div>	
+						
+						<div class="form-group" id="cause_repair_fg"> 
+							<label class="control-label">Причина ремонта</label>
+							<input type="text" class="form-control" id="cause_repair_input" required name="cause_repair" placeholder="Укажите причину ремонта">
+						</div>	
+												
+								
+						<div class="form-group"  id="cost_repair_fg">
+							<label class="control-label">Стоимость</label>
+							<input type="number" class="form-control" id="cost_repair_input" required name="cost_repair" placeholder="Укажите стоимость ремонта">
+						</div>
+					</form>	
+				</div> 
+				
+				<div class="modal-footer"> 
+					<div class="btn-group" role="group" aria-label="...">
+						<button type="button" class="btn btn-success" id = "new_repair_add">Сохранить</button> 
+						<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button> 						
+					</div>
+				</div> 
+			</div> 
+		</div> 
+	</div>
+	
+	<div id="new_write-off_modal" class="modal fade"> 
+		<div class="modal-dialog"> 
+			<div class="modal-content"> 
+				<div class="modal-header"> 
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+					<h4 class="modal-title">Списание оборудования</h4> 
+				</div> 
+											
+				<div class="modal-body" id = "new_write-off_modal_body"> 
+					<form id ="new_write-off_modal_form">
+						<div class="form-group" id="write-off_date_fg"> 
+								<label class="control-label">Укажите дату списания</label>
+								<input type="date" class="form-control" id="write-off_date_input" required name="write-off_date" placeholder="Укажите дату списания">
+						</div>	
+					
+						<div class="form-group" id="write-off_act_fg"> 
+								<label class="control-label">Акт списания</label>
+								<input type="text" class="form-control" id="write-off_act_input" required name="write-off_act" placeholder="Акт списания">
+						</div>
+						
+						<div class="form-group" id="write-off_fg"> 
+							<label class="control-label">Введите слово "Списать" чтобы списать выбранное оборудование</label>
+							<input type="text" class="form-control" id="write-off_input" required name="write-off" placeholder="">
+						</div>
+					</form>
+				</div> 
+				
+				<div class="modal-footer"> 
+					<div class="btn-group" role="group" aria-label="...">				
+						<button type="button" class="btn btn-success" id = "write-off_add">Сохранить</button> 
+						<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button> 	
+					</div>
+				</div> 
+			</div> 
+		</div> 
+	</div>
+	
+	<div id="new_delete_modal" class="modal fade"> 
+		<div class="modal-dialog"> 
+			<div class="modal-content"> 
+				<div class="modal-header"> 
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+					<h4 class="modal-title">Утилизация оборудования </h4> 
+				</div> 
+				
+				<div class="modal-body" id = "new_delete_modal_body"> 					
+					<form id ="new_delete_modal_form">	
+						
+						<div class="form-group" id="delete_date_fg"> 
+								<label class="control-label">Укажите дату списания</label>
+								<input type="date" class="form-control" id="delete_date_input" required name="delete_date" placeholder="Укажите дату списания">
+						</div>	
+						
+						<div class="form-group" id="delete_act_fg"> 
+								<label class="control-label">Акт списания</label>
+								<input type="text" class="form-control" id="delete_act_input" required name="delete_act" placeholder="Акт списания">
+						</div>
+						
+						<div class="form-group" id="delete_input_fg"> 
+							<label class="control-label">Введите слово "Утилизировать" чтобы утилизировать выбранное оборудование</label>
+							<input type="text" class="form-control" id="delete_input" required name="delete" placeholder="">
+						</div>							
+					</form>	
+				</div> 
+				
+				<div class="modal-footer">  
+					<div class="btn-group" role="group" aria-label="...">				
+						<button type="button" class="btn btn-success" id = "delete_add">Сохранить</button> 
+						<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+					</div>
+				</div> 
+			</div> 
+		</div>
+	</div>
+	
+	<div id="no_object_error" class="modal fade"> 
+		<div class="modal-dialog"> 
+			<div class="modal-content"> 
+				<div class="modal-header"> 
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+					<h4 class="modal-title"> Ошибка </h4> 
+				</div> 
+				<div class="modal-body" id = "no_object_error_body"> 
+					
+					<div class="form-group"> 
+						<label class="control-label">Оборудование не выбрано</label>
+					</div>	
+									
+				</div> 
+				
+				<div class="modal-footer">  
+				    <div class="btn-group" role="group" aria-label="...">				
+						<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+					</div>
+				</div> 
+			</div> 
+		</div> 
+	</div>
+	
+	<div id="del_object_error" class="modal fade"> 
+		<div class="modal-dialog"> 
+			<div class="modal-content"> 
+				<div class="modal-header"> 
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+					<h4 class="modal-title"> Ошибка </h4> 
+				</div> 
+				<div class="modal-body" id = "del_object_error_body"> 
+					
+					<div class="form-group"> 
+						<label class="control-label">Оборудование удалено</label>
+					</div>	
+									
+				</div> 
+				
+				<div class="modal-footer">  
+				    <div class="btn-group" role="group" aria-label="...">				
+						<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+					</div>
+				</div> 
+			</div> 
+		</div> 
+	</div>
+
+
+	<div id="edit_object_modal" class="modal fade"> 
+		<div class="modal-dialog"> 
+			<div class="modal-content"> 
+				<div class="modal-header"> 
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+					<h4 class="modal-title">Редактирование оборудования</h4> 
+				</div> 
+				<div class="modal-body" id = "edit_object_modal_body"> 
+					<form id ="edit_object_modal_form">
+					
+						<div class="form-group" id="edit_object_name_fg">
+							<label class="control-label">Название оборудования</label>
+							<input type="text" class="form-control" id="edit_object_name_input" required name="edit_object_name">
+						</div>	
+		   
+						<div class="form-group" id ="edit_object_type_fg">
+							<label class="control-label">Выберите тип оборудования</label>
+							<select id ="edit_object_type_select" required name="edit_object_type" class="form-control"> 
+
+							</select> 
+						</div>
+						
+						<div class="form-group" id="edit_object_date_fg"> 
+							<label class="control-label">Дата приобритения</label>
+							<input type="date" class="form-control" id="edit_object_date_input" required name="edit_object_date" >
+						</div>						
+								
+						<div class="form-group" id="edit_object_factory_number_fg">
+							<label class="control-label">Заводской номер</label>
+							<input type="number" class="form-control" id="edit_object_factory_number_input" required name="edit_object_factory_number">
+						</div>
+						
+						<div class="form-group" id="edit_object_inventory_number_fg>
+							<label class="control-label">Инвентарный номер</label>
+							<input type="number" class="form-control" id="edit_object_inventory_number_input" required name="edit_object_inventory_number">
+						</div>
+						
+					</form>
+				</div> 
+				
+				<div class="modal-footer"> 
+					<div class="btn-group" role="group" aria-label="...">
+						<button type="button" class="btn btn-success" id = "edit_object_add">Редактировать</button> 
+						<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button> 
+					</div>	
+				</div> 
+			</div> 
+		</div> 
+	</div>
+	
+	<div id="delete_obj_modal" class="modal fade"> 
+		<div class="modal-dialog"> 
+			<div class="modal-content"> 
+				<div class="modal-header"> 
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+					<h4 class="modal-title">Удаление оборудования </h4> 
+				</div> 
+				
+				<div class="modal-body" id = "delete_obj_modal_body"> 
+					<form id = "delete_obj_modal_form">						
+						<div class="form-group"> 
+							<label class="control-label">Введите слово "Удалить" чтобы удалить выбранное оборудование</label>
+							<input type="text" class="form-control" id="delete_obj_input" required name="delete" placeholder="">
+						</div>	
+					</form>					
+				</div> 
+					
+				<div class="modal-footer">  
+					<div class="btn-group" role="group" aria-label="...">				
+						<button type="button" class="btn btn-success" id = "delete_obj_add">Удалить</button> 
+						<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+					</div>
+				</div> 
+			</div> 
+		</div> 
+	</div>
+	
+	<div id="roll_rep_his_modal" class="modal fade"> 
+		<div class="modal-dialog"> 
+			<div class="modal-content"> 
+				<div class="modal-header"> 
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+					<h4 class="modal-title">Отмена ремонта </h4> 
+				</div> 
+				
+				<div class="modal-body" id = "roll_rep_his_modal_body"> 					
+					<div class="form-group"> 
+						<label class="control-label">Вы действительно хотите отменить последний ремонт?</label>
+					</div>					
+				</div> 
+					
+				<div class="modal-footer">  
+					<div class="btn-group" role="group" aria-label="...">				
+						<button type="button" class="btn btn-success" id = "roll_rep_his_add">Отменить</button> 
+						<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+					</div>
+				</div> 
+			</div> 
+		</div> 
+	</div>
+	
+	<div id="roll_plc_his_modal" class="modal fade"> 
+		<div class="modal-dialog"> 
+			<div class="modal-content"> 
+				<div class="modal-header"> 
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+					<h4 class="modal-title">Отмена перемещения </h4> 
+				</div> 
+				
+				<div class="modal-body" id = "roll_plc_his_modal_body"> 					
+					<div class="form-group"> 
+						<label class="control-label">Вы действительно хотите отменить последнее перемещение ?</label>
+					</div>					
+				</div> 
+					
+				<div class="modal-footer">  
+					<div class="btn-group" role="group" aria-label="...">				
+						<button type="button" class="btn btn-success" id = "roll_plc_his_add">Отменить</button> 
+						<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+					</div>
+				</div> 
+			</div> 
+		</div> 
+	</div>
+	
+	<div id="roll_pas_his_modal" class="modal fade"> 
+		<div class="modal-dialog"> 
+			<div class="modal-content"> 
+				<div class="modal-header"> 
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+					<h4 class="modal-title">Отмена паспорта </h4> 
+				</div> 
+				
+				<div class="modal-body" id = "roll_pas_his_modal_body"> 					
+					<div class="form-group"> 
+						<label class="control-label">Вы действительно хотите отменить последний паспорт?</label>
+					</div>					
+				</div> 
+					
+				<div class="modal-footer">  
+					<div class="btn-group" role="group" aria-label="...">				
+						<button type="button" class="btn btn-success" id = "roll_pas_his_add">Отменить</button> 
+						<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+					</div>
+				</div> 
+			</div> 
+		</div> 
+	</div>
+	
+	<div id="roll_sta_his_modal" class="modal fade"> 
+		<div class="modal-dialog"> 
+			<div class="modal-content"> 
+				<div class="modal-header"> 
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+					<h4 class="modal-title">Отмена статуса </h4> 
+				</div> 
+				
+				<div class="modal-body" id = "roll_sta_his_modal_body"> 					
+					<div class="form-group"> 
+						<label class="control-label">Вы действительно хотите отменить последний статус?</label>
+					</div>					
+				</div> 
+					
+				<div class="modal-footer">  
+					<div class="btn-group" role="group" aria-label="...">				
+						<button type="button" class="btn btn-success" id = "roll_sta_his_add">Отменить</button> 
+						<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+					</div>
+				</div> 
+			</div> 
+		</div> 
+	</div>
+	
+	<div id="object_new_pas_modal" class="modal fade"> 
+		<div class="modal-dialog"> 
+			<div class="modal-content"> 
+				<div class="modal-header"> 
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+					<h4 class="modal-title">Изменение паспорта оборудования</h4> 
+				</div> 
+				<div class="modal-body" id = "object_new_pas_modal_body"> 
+					<form id ="object_new_pas_modal_form" enctype="multipart/form-data">							
+						<div class="form-group" id="object_new_pas_fg">
+							<label class="control-label">Выберите файл фотографии паспорта оборудования</label>
+							<input id ="object_new_pas_input" required name="object_new_pas" type="file" accept="image/*" placeholder="Выберите файл паспорта" >
+						</div>		
+						
+						<div class="form-group" id="object_new_pas_date_fg"> 
+							<label class="control-label">Дата изменения</label>
+							<input type="date" class="form-control" id="object_new_pas_date_input" required name="edit_object_date" >
+						</div>	
+						
+					</form>
+				</div> 
+				
+				<div class="modal-footer"> 
+					<div class="btn-group" role="group" aria-label="...">
+						<button type="button" class="btn btn-success" id = "object_new_pas_add">Добавить</button> 
+						<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button> 
+					</div>	
+				</div> 
+			</div> 
+		</div> 
+	</div>
+
+<div class="container">	
+
+	 <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Учет оборудования</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li  class= "active"><a href="#"><span class="glyphicon glyphicon-home"></span> Главная</a></li>
+			  <li><a href="/report/"><span class="glyphicon glyphicon-list-alt"></span> Отчеты</a></li>
+              <li><a href="/directory/"><span class="glyphicon glyphicon-book"></span> Справочники</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+
+              <li><a href="#"><span class="glyphicon glyphicon-question-sign"></span> Помощь</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+	  
+	<div class = "row">
+		<div class="col-lg-4">		
+			<div id="filter">
+				<form id ="filter_param_form">
+				<div id="filter_param">
+					<h4>Фильтр</h4> 
+					<div class="form-group"> 
+						<label control-label>Наименование</label> 
+						<input type="text" class="form-control" id="search_name" /> 
+					</div> 
+					
+					<div class="form-group"> 
+						<a href="#" data-toggle="collapse" data-target="#toggleType" ><ins><strong>Тип оборудования</strong></ins></a> 					
+						<div id="toggleType" class="collapse collapse-lvl1">				
+							{% for t in types %} 
+								<div class="checkbox"> 
+									<label><input type="checkbox" value="{{t.pk_type}}">{{t.type_name}}</label> 
+								</div> 
+							{%endfor%} 
+						</div> 
+					</div> 
+					
+					<div class="form-group"> 
+						<a href="#" data-toggle="collapse" data-target="#toggleDate" ><ins><strong>Дата приобретения</strong></ins></a> 
+						<div id="toggleDate" class="collapse collapse-lvl1"> 
+							<div> 
+								от<input type="Date" class="form-control" id = "begin"> 
+								до<input type="Date" class="form-control" id = "end"> 
+							</div> 
+						</div> 
+					</div> 
+					
+					<div class="form-group"> 
+						<a href="#" data-toggle="collapse" data-target="#toggleFactoryNumber" ><ins><strong>Заводской номер</strong></ins></a> 
+						<div id="toggleFactoryNumber" class="collapse collapse-lvl1"> 
+							<div> 
+								<input type="text" class="form-control" id = "number"> 
+							</div> 
+						</div> 
+					</div> 
+					
+					<div class="form-group"> 
+						<a href="#" data-toggle="collapse" data-target="#toggleInventoryNumber" ><ins><strong>Инвентарный номер</strong></ins></a> 
+						<div id="toggleInventoryNumber" class="collapse collapse-lvl1"> 
+							<div> 
+								<input type="text" class="form-control" id = "number"> 
+							</div> 
+						</div> 
+					</div> 
+					
+					<div class="form-group"> 
+						<a href="#" data-toggle="collapse" data-target="#toggleResponce" ><ins><strong>Эксплуатирующее лицо</strong></ins></a> 
+						<div id="toggleResponce" class="collapse collapse-lvl1"> 
+							{% for f in fios %} 
+							<div class="checkbox"> 
+								<label><input type="checkbox" value="{{f.pk_fio}}">{{f.surname}} {{f.fio_name}} {{f.patronymic}}</label> 
+							</div> 
+							{%endfor%} 
+						</div> 
+					</div> 
+
+					<div class="form-group"> 
+						<a href="#" data-toggle="collapse" data-target="#togglePlace" ><ins><strong>Место расположения</strong></ins></a> 
+						<div id="togglePlace" class="collapse collapse-lvl1"> 
+							<div> 
+								<a href="#" data-toggle="collapse" data-target="#toggleVsp" ><ins><strong>ВСП</strong></ins></a> 
+								<div id="toggleVsp" class="collapse collapse-lvl2"> 
+									<div> 
+										{% for v in vsps %} 
+										<div class="checkbox"> 
+											<label><input type="checkbox" value="{{v.pk_vsp}}">{{v.name_vsp}}</label> 
+										</div> 
+										{%endfor%} 
+									</div> 
+								</div> 
+							</div> 
+							<div> 
+								<a href="#" data-toggle="collapse" data-target="#toggleRoom" ><ins><strong>Кабинет</strong></ins></a> 
+								<div id="toggleRoom" class="collapse collapse-lvl2"> 
+									<div> 
+										<label><input type="text" class="form-control" id = "number"></label> 
+									</div> 
+								</div> 
+							</div> 
+						</div> 
+					</div> 
+					<div class="form-group"> 
+						<a href="#" data-toggle="collapse" data-target="#toggleStatus" ><ins><strong>Статус</strong></ins></a> 
+						<div id="toggleStatus" class="collapse collapse-lvl1"> 
+							{% for s in status %} 
+							<div class="checkbox"> 
+								<label><input type="checkbox" value="{{s.pk_status}}">{{s.name_status}}</label> 
+							</div> 
+							{%endfor%} 
+						</div> 
+					</div> 
+					<hr> 				
+				</div>
+				</form>
+				<div id="filter_print">
+						<button type="button" id="search" class="btn btn-success"><span class="glyphicon glyphicon-search"></span> Найти</button> 
+						<button type="button" id="clear_search" class="btn btn-success"><span class="glyphicon glyphicon-remove"></span> Сбросить фильтр</button> 
+				</div>
+			
+			</div>
+		
+			<div id = "marker">
+				<ul class="nav nav-pills nav-justified">
+					<li id="nav_pills_1"><a href="#">1</a></li>
+					<li id="nav_pills_2"><a href="#">2</a></li>
+					<li id="nav_pills_3"><a href="#">3</a></li>
+					<li id="nav_pills_4"><a href="#">4</a></li>
+					<li id="nav_pills_5"><a href="#">5</a></li>
+				</ul>		
+			</div>	
+			
+			<div id="info">
+				<div id="info_obj">				
+				</div>				
+			</div>
+			
+        </div>
+		
+		<div class="col-lg-8">
+			<div id="group">
+				<div class="col-lg-2">
+					<fieldset id="foobar" data-val="1">						
+						<label>Единичный выбор
+							<input name="foobar" type="radio" value="one" checked  />
+						</label>
+						
+						<label>Множественный выбор
+							<input name="foobar" type="radio" value="lot" />
+						</label>
+					</fieldset>				 
+				</div>
+				
+				<div class="col-lg-10">
+					<div class="btn-group" role="group" aria-label="...">
+						<button type="button" id="enter_btn" class="btn btn-success"> <span class="glyphicon glyphicon-plus"></span> Ввод</button>
+						<button type="button" id="move_btn" class="btn btn-success" data-id="0"><span class="glyphicon glyphicon-road"></span> Перемещение</button>
+						<button type="button" id="repair_btn" class="btn btn-success" data-id="0"><span class="glyphicon glyphicon-wrench"></span> Ремонт</button>
+						<button type="button" id="write-off_btn" class="btn btn-success" data-id="0"><span class="glyphicon glyphicon-erase"></span> Списание</button>
+						<button type="button" id="delete_btn" class="btn btn-success" data-id="0"><span class="glyphicon glyphicon-trash"></span> Утилизация</button>
+						
+					</div>
+					
+					<div class="col-lg-6" id ="lot_operation" hidden>	
+						<label>Выберите данные для сортировки</label>
+						<select id ="lot_operation_select" required name="lot_operation_select" class="form-control"> 
+							<option value="1">Перемещение</option>
+							<option value="2">Ремонт</option>
+							<option value="3">Списание</option>
+							<option value="4">Утилизация</option>
+						</select> 
+					</div>				
+				</div>				
+			</div>
+		</div>
+		
+		<div class="col-lg-8">
+			<div id="table">
+				<div class="table-responsive">
+					<table class="table table-hover table-bordered">
+						<thead class ="table_head">
+							<tr>
+							  <th><span class="glyphicon glyphicon-th-list"></span></th>
+							  <th>Наименование</th>
+							  <th>Тип</th>
+							  <th>Место</th>
+							</tr>
+						</thead>
+						<tbody id="table_body">
+							{% for object in objects %}
+								<tr id="object_1" data-id="{{object.pk_object}}" name ="td_{{object.pk_object}}">
+									<td> <input type="checkbox" name="group_chk_onc" class="hidden" data-id="{{object.pk_object}}" ></td>
+									<td>{{object.name}}</td>
+									<td>{{object.type_name}}</td>
+									<td>ВСП: {{object.name_vsp}}, Кабинет: {{object.room}}</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div> 
+ 		
+	</div>		
+</div>
+{% endblock %}

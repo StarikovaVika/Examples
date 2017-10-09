@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Блог!{% endblock %}</title>
+        {% block stylesheets %} <link rel="stylesheet" href="{{ asset('css/style.css') }}">{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+        <body>
+        <div class="navbar">
+            <a href="{{path('homepage')}}">
+                <div class="navbar__item-left">
+                    <div class="navbar__item-span" >Главная</div>
+                </div>
+            </a>
+            {% if app.session.get('username') %}
+            <a href="{{path('logout')}}">
+                <div class="navbar__item-right">
+                    <div class="navbar__item-span">Выйти</div>
+                </div>
+            </a>
+            <a href="{{path('newpost')}}">
+                <div class="navbar__item-right">
+                    <div class="navbar__item-span">Добавить пост</div>
+                </div>
+            </a>
+            {% else %}
+                <a href="{{path('authorization-page')}}">
+                    <div class="navbar__item-right">
+                        <div class="navbar__item-span">Войти</div>
+                    </div>
+                </a>
+            {% endif %}
+
+        </div>
+        {% block body %}{% endblock %}
+        {% block javascripts %}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <script src="http://malsup.github.com/jquery.form.js"></script>
+            <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+            <script src="{{ asset("js/script.js") }}"></script>
+
+        {% endblock %}
+    </body>
+</html>
